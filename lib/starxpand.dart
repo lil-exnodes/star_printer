@@ -1,11 +1,12 @@
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:star_printer/model.dart';
-import 'package:starxpandprinter/starxpand.dart';
+import 'package:starxpand/starxpand.dart';
 
 class PrintersPage extends StatefulWidget {
-  const PrintersPage({Key? key}) : super(key: key);
+  const PrintersPage({super.key});
 
   @override
   State<PrintersPage> createState() => _PrintersPageState();
@@ -40,8 +41,17 @@ class _PrintersPageState extends State<PrintersPage> {
   }
 
   Future<void> _find() async {
-    var ps = await StarXpand.findPrinters(
-        interfaces: [StarXpandInterface.bluetooth]);
+    await [
+      Permission.bluetooth,
+      Permission.bluetoothScan,
+      Permission.bluetoothConnect,
+      Permission.bluetoothAdvertise,
+      Permission.location,
+      Permission.manageExternalStorage,
+      Permission.requestInstallPackages,
+      Permission.storage,
+    ].request();
+    var ps = await StarXpand.findPrinters();
     setState(() {
       printers = ps;
     });
@@ -152,11 +162,7 @@ class _PrintersPageState extends State<PrintersPage> {
       spaceQuantity = totalQuantity - quantityLength - priceLength;
       String spaceString = " " * spaceQuantity;
 
-      String right = " x" +
-          product.quantity.toString() +
-          spaceString +
-          "\$" +
-          product.price.toString();
+      String right = " x${product.quantity}$spaceString\$${product.price}";
 
       List<String> leftList = splitStringAtIndex(product.productName ?? '', 27);
       String left = leftList[0];
@@ -167,7 +173,7 @@ class _PrintersPageState extends State<PrintersPage> {
             bold: true,
             alignment: StarXpandStyleAlignment.left,
           )
-          ..actionPrintText(left + right + "\n\n\n\n"),
+          ..actionPrintText("$left$right\n\n\n\n"),
       );
     }
 
