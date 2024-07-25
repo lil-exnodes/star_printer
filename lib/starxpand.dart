@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:star_printer/model.dart';
 import 'package:starxpandprinter/starxpand.dart';
 
 class PrintersPage extends StatefulWidget {
@@ -13,6 +14,23 @@ class PrintersPage extends StatefulWidget {
 class _PrintersPageState extends State<PrintersPage> {
   List<StarXpandPrinter>? printers;
   Uint8List? logoBytes;
+  List<Product> products = [
+    Product(
+      productName: 'ABC XYZ ADSADASDA ZPAPPSPPPPPP',
+      price: 1000.00,
+      quantity: 20,
+    ),
+    Product(
+      productName: 'Bộ móng tay làm nail vip pro',
+      price: 987.00,
+      quantity: 1000,
+    ),
+    Product(
+      productName: 'ABC XYZ ADADADADADADADADAADA 789ADAADADADADAADADADA789',
+      price: 22.00,
+      quantity: 100,
+    ),
+  ];
 
   @override
   void initState() {
@@ -38,9 +56,28 @@ class _PrintersPageState extends State<PrintersPage> {
     return data.buffer.asUint8List();
   }
 
+  List<String> splitStringAtIndex(String input, int index) {
+    if (index < 0 || index > input.length) {
+      throw RangeError('Index out of bounds');
+    }
+
+    String part1 = input.substring(0, index);
+    String part2 = input.substring(index);
+
+    return [part1, part2];
+  }
+
+  String onCaculateSpace(String left, String right) {
+    int total = 48;
+    int leftLength = left.length;
+    int rightLength = right.length;
+    int spaceLength = total - leftLength - rightLength;
+
+    return '$left${' ' * spaceLength}$right\n\n';
+  }
+
   _print(StarXpandPrinter printer) async {
     if (logoBytes == null) {
-      // Handle the case where the image is not loaded
       return;
     }
 
@@ -107,35 +144,57 @@ class _PrintersPageState extends State<PrintersPage> {
         "Service                                    Total\n\n\n");
     printDoc.actionPrintText(
         "------------------------------------------------\n\n\n\n");
-    printDoc.add(StarXpandDocumentPrint()
-      ..style(bold: true)
-      ..actionPrintText(
-          "Dip                                       \$40.00\n\n\n\n"));
+    int totalQuantity = 20;
+    for (Product product in products) {
+      int spaceQuantity = 0;
+      int quantityLength = product.quantity.toString().length + 1;
+      int priceLength = product.price.toString().length + 1;
+      spaceQuantity = totalQuantity - quantityLength - priceLength;
+      String spaceString = " " * spaceQuantity;
+
+      String right = " x" +
+          product.quantity.toString() +
+          spaceString +
+          "\$" +
+          product.price.toString();
+
+      List<String> leftList = splitStringAtIndex(product.productName ?? '', 27);
+      String left = leftList[0];
+      right += leftList[1];
+      printDoc.add(
+        StarXpandDocumentPrint()
+          ..style(
+            bold: true,
+            alignment: StarXpandStyleAlignment.left,
+          )
+          ..actionPrintText(left + right + "\n\n\n\n"),
+      );
+    }
+
     printDoc.actionPrintText(
         "------------------------------------------------\n\n");
 
     printDoc.add(
       StarXpandDocumentPrint()
         ..style(
-            alignment: StarXpandStyleAlignment.left,
+            alignment: StarXpandStyleAlignment.center,
             internationalCharacter:
                 StarXpandStyleInternationalCharacter.vietnam)
-        ..actionPrintText(
-            "Subtotal                                  \$40.00\n\n"
-            "Loyalty Discount                          \$40.00\n\n"
-            "Voucher Discount                           \$0.00\n\n"
-            "Quick Discount                             \$0.00\n\n"
-            "Gift Card                                  \$0.00\n\n"
-            "Cancellation Fee                           \$0.00\n\n"
-            "Total tips                                 \$0.00\n\n"
-            "Tax (0.0 %)                                \$0.00\n\n"
+        ..actionPrintText("${onCaculateSpace('Subtotal', '\$1.00')}"
+            "${onCaculateSpace('Loyalty Discount', '\$233.00')}"
+            "${onCaculateSpace('Voucher Discount', '\$40.00')}"
+            "${onCaculateSpace('Quick Discount', '\$40.00')}"
+            "${onCaculateSpace('Gift Card', '\$40.00')}"
+            "${onCaculateSpace('Cancellation Fee', '\$40.00')}"
+            "${onCaculateSpace('Total tips', '\$40.00')}"
+            "${onCaculateSpace('Tax (0.0 %)', '\$40.00')}"
             "------------------------------------------------\n\n\n"),
     );
     printDoc.add(
       StarXpandDocumentPrint()
         ..style(bold: true)
         ..actionPrintText(
-            "Total  Cost                               \$40.00\n\n\n"),
+            "Total Cost                                \$40.00\n\n\n"),
     );
 
     printDoc.actionPrintText(
