@@ -62,116 +62,106 @@ class _PrintersPageState extends State<PrintersPage> {
         horizontalTabPosition: [],
         cjkCharacterPriority: []);
 
-    // In ảnh logo đã được preload
-    printDoc.actionPrintImage(logoBytes!, 200);
+    printDoc.actionPrintImage(logoBytes!, 150);
+    printDoc.actionPrintText("\n\n\n\n");
+    printDoc.add(
+      StarXpandDocumentPrint()
+        ..style(bold: true)
+        ..actionPrintText("Supplier name\n\n\n"),
+    );
+    printDoc.actionPrintText("Nguyen Trai\n\n\n"
+        "Tel: (815) 376-5555\n\n\n"
+        "Asia, Ho Chi Minh - Thu Jul 25 - 11:59:44 AM\n\n\n\n");
     printDoc.actionPrintText("\n");
     printDoc.actionPrintText("\n");
-    printDoc.actionPrintText("Star Clothing Boutique\n"
-        "123 Star Road\n"
-        "City, State 12345\n");
-
-    printDoc.style(alignment: StarXpandStyleAlignment.center);
-    printDoc.actionPrintText("Date:MM/DD/YYYY    Time:HH:MM PM\n"
-        "--------------------------------\n");
-
     printDoc.add(StarXpandDocumentPrint()
       ..style(bold: true)
-      ..actionPrintText("SALE\n"));
-
-    printDoc.actionPrintText("SKU         Description    Total\n"
-        "--------------------------------\n");
-    printDoc.style(
-        alignment: StarXpandStyleAlignment.center,
-        internationalCharacter: StarXpandStyleInternationalCharacter.vietnam);
+      ..actionPrintText("Receipt\n"));
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
     printDoc
-        .actionPrintText("300678566   BLACK DENIM BLACK DENIMBLACK 1110.9\$\n"
-            "300678566   Việt DENIM BLACK DENI BLACK  1110.9\$\n"
-            "300651148   BLUE DENIM White                 .9\$\n"
-            "300642980   STRIPED DRESS                  49.9\$\n"
-            "300638471   BLACK BOOTS                    35.9\$\n"
-            "300638471  Đinh Ngọc Đô BLACK BOOTS                    35.9\$\n"
-            "Subtotal                                  156.9\$\n"
-            "Tax                                         0.0\$\n"
-            "------------------------------------------------\n");
-    printDoc
-        .actionPrintText("300678566   BLACK DENIM BLACK DENIMBLACK 1110.9\$\n"
-            "300678566   Việt DENIM BLACK DENI BLACK  1110.9\$\n"
-            "300651148   BLUE DENIM White                 .9\$\n"
-            "300642980   STRIPED DRESS                  49.9\$\n"
-            "300638471   BLACK BOOTS                    35.9\$\n"
-            "300638471  Đinh Ngọc Đô BLACK BOOTS                    35.9\$\n"
-            "Subtotal                                  156.9\$\n"
-            "Tax                                         0.0\$\n"
-            "------------------------------------------------\n");
-    printDoc
-        .actionPrintText("300678566   BLACK DENIM BLACK DENIMBLACK 1110.9\$\n"
-            "300678566   Việt DENIM BLACK DENI BLACK  1110.9\$\n"
-            "300651148   BLUE DENIM White                 .9\$\n"
-            "300642980   STRIPED DRESS                  49.9\$\n"
-            "300638471   BLACK BOOTS                    35.9\$\n"
-            "300638471  Đinh Ngọc Đô BLACK BOOTS                    35.9\$\n"
-            "Subtotal                                  156.9\$\n"
-            "Tax                                         0.0\$\n"
-            "------------------------------------------------\n");
-    printDoc
-        .actionPrintText("300678566   BLACK DENIM BLACK DENIMBLACK 1110.9\$\n"
-            "300678566   Việt DENIM BLACK DENI BLACK  1110.9\$\n"
-            "300651148   BLUE DENIM White                 .9\$\n"
-            "300642980   STRIPED DRESS                  49.9\$\n"
-            "300638471   BLACK BOOTS                    35.9\$\n"
-            "300638471  Đinh Ngọc Đô BLACK BOOTS                    35.9\$\n"
-            "Subtotal                                  156.9\$\n"
-            "Tax                                         0.0\$\n"
-            "------------------------------------------------\n");
-    printDoc
-        .actionPrintText("300678566   BLACK DENIM BLACK DENIMBLACK 1110.9\$\n"
-            "300678566   Việt DENIM BLACK DENI BLACK  1110.9\$\n"
-            "300651148   BLUE DENIM White                 .9\$\n"
-            "300642980   STRIPED DRESS                  49.9\$\n"
-            "300638471   BLACK BOOTS                    35.9\$\n"
-            "300638471  Đinh Ngọc Đô BLACK BOOTS                    35.9\$\n"
-            "Subtotal                                  156.9\$\n"
-            "Tax                                         0.0\$\n"
-            "------------------------------------------------\n");
-    printDoc.actionPrintText("Total     ");
-
-    printDoc.add(StarXpandDocumentPrint()
-      ..style(magnification: StarXpandStyleMagnification(1, 1))
-      ..actionPrintText("   \$156.95\n"));
-
-    printDoc
-        .actionPrintText("------------------------------------------------\n"
-            "Charge\n"
-            "156.95\n"
-            "Visa XXXX-XXXX-XXXX-0123\n");
-
-    printDoc.add(StarXpandDocumentPrint()
-      ..style(invert: true)
-      ..actionPrintText("Refunds and Exchanges\n"));
-
-    printDoc.actionPrintText("Within ");
-
-    printDoc.add(StarXpandDocumentPrint()
-      ..style(underLine: true)
-      ..actionPrintText("30 days"));
-
-    printDoc.actionPrintText(" with receipt\n");
-    printDoc.actionPrintText("And tags attached\n\n");
-
-    printDoc.style(
-        alignment: StarXpandStyleAlignment.center,
-        internationalCharacter: StarXpandStyleInternationalCharacter.vietnam);
-
-    printDoc.actionPrintBarcode("0123456",
-        symbology: StarXpandBarcodeSymbology.jan8,
+        .actionPrintText("Cashier:                              Danny Tran\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("Receipt number");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintBarcode("BB1721851796",
+        symbology: StarXpandBarcodeSymbology.code128,
         barDots: 3,
-        height: 5,
+        height: 30,
         printHri: true);
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText("\n");
+    printDoc.actionPrintText(
+        "Service                                    Total\n\n\n");
+    printDoc.actionPrintText(
+        "------------------------------------------------\n\n\n\n");
+    printDoc.add(StarXpandDocumentPrint()
+      ..style(bold: true)
+      ..actionPrintText(
+          "Dip                                       \$40.00\n\n\n\n"));
+    printDoc.actionPrintText(
+        "------------------------------------------------\n\n");
 
-    printDoc.actionFeedLine(1);
+    printDoc.add(
+      StarXpandDocumentPrint()
+        ..style(
+            alignment: StarXpandStyleAlignment.left,
+            internationalCharacter:
+                StarXpandStyleInternationalCharacter.vietnam)
+        ..actionPrintText(
+            "Subtotal                                  \$40.00\n\n"
+            "Loyalty Discount                          \$40.00\n\n"
+            "Voucher Discount                           \$0.00\n\n"
+            "Quick Discount                             \$0.00\n\n"
+            "Gift Card                                  \$0.00\n\n"
+            "Cancellation Fee                           \$0.00\n\n"
+            "Total tips                                 \$0.00\n\n"
+            "Tax (0.0 %)                                \$0.00\n\n"
+            "------------------------------------------------\n\n\n"),
+    );
+    printDoc.add(
+      StarXpandDocumentPrint()
+        ..style(bold: true)
+        ..actionPrintText(
+            "Total  Cost                               \$40.00\n\n\n"),
+    );
 
-    printDoc.actionPrintQRCode("Hello, World\n",
-        level: StarXpandQRCodeLevel.l, cellSize: 8);
+    printDoc.actionPrintText(
+        "------------------------------------------------\n\n");
+
+    printDoc
+        .actionPrintText("Cash                                      \$40.00\n\n"
+            "Credit                                     \$0.00\n\n"
+            "Change                                     \$0.00\n\n");
+    printDoc
+        .actionPrintText("------------------------------------------------\n");
+
+    printDoc.add(
+      StarXpandDocumentPrint()
+        ..style(alignment: StarXpandStyleAlignment.center)
+        ..actionPrintText(
+          "Wifi: Exnodes\n\n"
+          "Password: 123456789\n\n\n\n\n\n",
+        ),
+    );
+
+    printDoc.add(
+      StarXpandDocumentPrint()
+        ..style(bold: true, alignment: StarXpandStyleAlignment.center)
+        ..actionPrintText("Thank you !\n\n"),
+    );
 
     printDoc.actionCut(StarXpandCutType.partial);
 
